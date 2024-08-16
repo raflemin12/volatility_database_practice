@@ -40,3 +40,16 @@ conn_v = psycopg2.connect(dbname='volatility',
 
 conn_v.autocommit = True
 cur_v = conn_v.cursor()
+
+cur_v.execute("CREATE TABLE vix("
+             "vix_id SERIAL PRIMARY KEY,"
+             "date DATE,"
+             "open NUMERIC,"
+             "high NUMERIC,"
+             "low NUMERIC,"
+             "close NUMERIC);")
+
+cur_v.copy_from(vix_hist,'vix', null='', sep=',', columns=('date', 'open', 'high', 'low', 'close'))
+
+cur_v.execute("SELECT AVG(close) FROM vix;")
+cur_v.fetchall()
