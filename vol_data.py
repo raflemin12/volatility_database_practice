@@ -1,9 +1,10 @@
-import pandas as pd
 import os
+import pandas as pd
 from dotenv import load_dotenv
 import psycopg2
 
-vix_hist = pd.read_csv('https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv', index_col=False)
+vix_hist = pd.read_csv('https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv',
+                       index_col=False)
 
 # change column names to lowercase
 
@@ -19,7 +20,8 @@ conn = psycopg2.connect(dbname=os.getenv("DBNAME"),
                         user=os.getenv("USER"),
                         password=os.getenv("PASSWORD"),
                         host=os.getenv("HOST"),
-                        port=os.getenv("PORT"))
+                        port=os.getenv("PORT")
+)
 
 conn.autocommit = True
 cur = conn.cursor()
