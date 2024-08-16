@@ -15,5 +15,10 @@ vix_hist['date'] = pd.to_datetime(vix_hist['date'], yearfirst=True)
 
 load_dotenv()
 
-conn = psycopg2.connect(dbname=os.getenv("DBNAME"), user=os.getenv("USER"), password=os.getenv("PASSWORD"), host=os.getenv("HOST"), port=os.getenv("PORT"))
+conn = psycopg2.connect(dbname=os.getenv("DBNAME"),
+                        user=os.getenv("USER"),
+                        password=os.getenv("PASSWORD"),
+                        host=os.getenv("HOST"),
+                        port=os.getenv("PORT"))
 
+cur = conn.cursor()
