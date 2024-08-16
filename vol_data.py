@@ -14,7 +14,7 @@ vix_hist.columns = [name.lower() for name in vix_hist.columns]
 
 vix_hist['date'] = pd.to_datetime(vix_hist['date'], yearfirst=True)
 
-load_dotenv()
+load_dotenv(override=True)
 
 conn = psycopg2.connect(dbname=os.getenv("DBNAME"),
                         user=os.getenv("USER"),
