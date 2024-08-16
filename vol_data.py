@@ -21,4 +21,7 @@ conn = psycopg2.connect(dbname=os.getenv("DBNAME"),
                         host=os.getenv("HOST"),
                         port=os.getenv("PORT"))
 
+conn.autocommit = True
 cur = conn.cursor()
+
+cur.execute("CREATE DATABASE volatility;")
