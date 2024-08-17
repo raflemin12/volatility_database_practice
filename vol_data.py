@@ -1,8 +1,8 @@
 import os
+from io import StringIO
 import pandas as pd
 from dotenv import load_dotenv
 import psycopg2
-from io import StringIO
 
 vix_hist = pd.read_csv('https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv',
                        index_col=False)
@@ -17,6 +17,7 @@ vix_hist['date'] = pd.to_datetime(vix_hist['date'], yearfirst=True)
 
 load_dotenv(override=True)
 
+# TODO: Make database connection and cursor a class
 conn = psycopg2.connect(dbname=os.getenv("DBNAME"),
                         user=os.getenv("USER"),
                         password=os.getenv("PASSWORD"),
