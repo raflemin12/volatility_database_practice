@@ -2,6 +2,7 @@ import os
 import pandas as pd
 from dotenv import load_dotenv
 import psycopg2
+from io import StringIO
 
 vix_hist = pd.read_csv('https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv',
                        index_col=False)
@@ -49,7 +50,13 @@ cur_v.execute("CREATE TABLE vix("
              "low NUMERIC,"
              "close NUMERIC);")
 
-cur_v.copy_from(vix_hist,'vix', null='', sep=',', columns=('date', 'open', 'high', 'low', 'close'))
+file = StringIO()
+
+vix_hist.to_csv(file, index=False, header=False)
+
+file.seek(0)
+
+cur_v.copy_from(file,'vix', null='', sep=',', columns=('date', 'open', 'high', 'low', 'close'))
 
 cur_v.execute("SELECT AVG(close) FROM vix;")
-cur_v.fetchall()
+print(cur_v.fetchall())
