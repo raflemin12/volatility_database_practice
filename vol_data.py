@@ -17,7 +17,6 @@ vix_hist['date'] = pd.to_datetime(vix_hist['date'], yearfirst=True)
 
 load_dotenv(override=True)
 
-# TODO: Make database connection and cursor a class
 conn = psycopg2.connect(dbname=os.getenv("DBNAME"),
                         user=os.getenv("USER"),
                         password=os.getenv("PASSWORD"),
@@ -61,3 +60,6 @@ cur_v.copy_from(file,'vix', null='', sep=',', columns=('date', 'open', 'high', '
 
 cur_v.execute("SELECT AVG(close) FROM vix;")
 print(cur_v.fetchall())
+
+cur_v.close()
+conn_v.close()
